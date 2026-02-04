@@ -4,12 +4,31 @@ from classifier import classify_po
 
 st.set_page_config(page_title="PO Category Classifier", layout="centered")
 
-st.markdown(
-    """
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+with st.sidebar:
+    st.subheader("Theme")
+    theme_choice = st.radio(
+        "Select UI theme",
+        ["Black", "Dark Green"],
+        horizontal=True,
+        label_visibility="collapsed",
+    )
 
-      :root {
+if theme_choice == "Dark Green":
+    theme_vars = """
+        --bg: #07100c;
+        --panel: #0f1814;
+        --panel-2: #121d18;
+        --ink: #e8f2ee;
+        --muted: #9eb3aa;
+        --accent: #7bf0c0;
+        --accent-2: #63d9a6;
+        --border: #22302a;
+        --chip: #16231d;
+    """
+    app_bg = "radial-gradient(900px 500px at 12% -12%, #0f1a15 0%, var(--bg) 55%, #050906 100%)"
+    hero_bg = "linear-gradient(135deg, #0f1b16 0%, #0c1512 55%, #0a120f 100%)"
+else:
+    theme_vars = """
         --bg: #0b0c0f;
         --panel: #12141a;
         --panel-2: #161922;
@@ -19,41 +38,52 @@ st.markdown(
         --accent-2: #9b8cff;
         --border: #242a36;
         --chip: #1b2230;
-      }
+    """
+    app_bg = "radial-gradient(900px 500px at 12% -12%, #141724 0%, var(--bg) 50%, #0a0b10 100%)"
+    hero_bg = "linear-gradient(135deg, #121621 0%, #10131b 55%, #0e1017 100%)"
 
-      .stApp {
-        background: radial-gradient(900px 500px at 12% -12%, #141724 0%, var(--bg) 50%, #0a0b10 100%);
+st.markdown(
+    f"""
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+      :root {{
+        {theme_vars}
+      }}
+
+      .stApp {{
+        background: {app_bg};
         color: var(--ink);
-      }
+      }}
 
-      .app-hero {
+      .app-hero {{
         padding: 20px 22px;
         border-radius: 16px;
-        background: linear-gradient(135deg, #121621 0%, #10131b 55%, #0e1017 100%);
+        background: {hero_bg};
         border: 1px solid var(--border);
         box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
         animation: riseIn 700ms ease both;
-      }
-      .app-hero h1 {
+      }}
+      .app-hero h1 {{
         margin: 0 0 6px 0;
         font-size: 32px;
         letter-spacing: 0.4px;
         font-family: 'Space Grotesk', sans-serif;
         color: var(--ink);
-      }
-      .app-hero p {
+      }}
+      .app-hero p {{
         margin: 0;
         color: var(--muted);
         font-family: 'Space Grotesk', sans-serif;
         font-size: 14px;
-      }
-      .section-title {
+      }}
+      .section-title {{
         font-weight: 600;
         margin: 10px 0 6px 0;
         font-family: 'Space Grotesk', sans-serif;
         color: var(--ink);
-      }
-      .chip {
+      }}
+      .chip {{
         display: inline-block;
         padding: 4px 10px;
         border-radius: 999px;
@@ -64,48 +94,48 @@ st.markdown(
         margin-right: 6px;
         font-family: 'Space Mono', monospace;
         animation: chipIn 500ms ease both;
-      }
-      .chip:nth-child(1) { animation-delay: 40ms; }
-      .chip:nth-child(2) { animation-delay: 120ms; }
-      .chip:nth-child(3) { animation-delay: 200ms; }
+      }}
+      .chip:nth-child(1) {{ animation-delay: 40ms; }}
+      .chip:nth-child(2) {{ animation-delay: 120ms; }}
+      .chip:nth-child(3) {{ animation-delay: 200ms; }}
 
-      .result-card {
+      .result-card {{
         border: 1px solid var(--border);
         border-radius: 12px;
         padding: 14px 16px;
         background: var(--panel);
         box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
         animation: fadeIn 500ms ease both;
-      }
-      .stTextArea textarea, .stTextInput input {
+      }}
+      .stTextArea textarea, .stTextInput input {{
         font-family: 'Space Grotesk', sans-serif;
         background: var(--panel-2) !important;
         color: var(--ink) !important;
         border: 1px solid var(--border) !important;
-      }
-      .stButton > button {
+      }}
+      .stButton > button {{
         border-radius: 10px;
         background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
         color: #0b0c0f;
         border: none;
         font-family: 'Space Grotesk', sans-serif;
-      }
-      .stButton > button:hover {
+      }}
+      .stButton > button:hover {{
         filter: brightness(1.05);
-      }
+      }}
 
-      @keyframes riseIn {
-        from { opacity: 0; transform: translateY(8px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(6px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes chipIn {
-        from { opacity: 0; transform: translateY(4px) scale(0.98); }
-        to { opacity: 1; transform: translateY(0) scale(1); }
-      }
+      @keyframes riseIn {{
+        from {{ opacity: 0; transform: translateY(8px); }}
+        to {{ opacity: 1; transform: translateY(0); }}
+      }}
+      @keyframes fadeIn {{
+        from {{ opacity: 0; transform: translateY(6px); }}
+        to {{ opacity: 1; transform: translateY(0); }}
+      }}
+      @keyframes chipIn {{
+        from {{ opacity: 0; transform: translateY(4px) scale(0.98); }}
+        to {{ opacity: 1; transform: translateY(0) scale(1); }}
+      }}
     </style>
     """,
     unsafe_allow_html=True,
