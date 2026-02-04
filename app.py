@@ -7,61 +7,62 @@ st.set_page_config(page_title="PO Category Classifier", layout="centered")
 st.markdown(
     """
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
 
       :root {
-        --ink: #1b2a22;
-        --muted: #44524a;
-        --cream: #f7f1e7;
-        --linen: #f3ece2;
-        --moss: #1f4a3d;
-        --moss-soft: #2a5b4a;
-        --gold: #c7a15b;
-        --border: #e1d8cb;
+        --bg: #0b0c0f;
+        --panel: #12141a;
+        --panel-2: #161922;
+        --ink: #f5f7fb;
+        --muted: #a7b0c0;
+        --accent: #7bdcff;
+        --accent-2: #9b8cff;
+        --border: #242a36;
+        --chip: #1b2230;
       }
 
       .stApp {
-        background: radial-gradient(1000px 540px at 12% -12%, var(--linen) 0%, var(--cream) 40%, #f9f7f2 100%);
+        background: radial-gradient(900px 500px at 12% -12%, #141724 0%, var(--bg) 50%, #0a0b10 100%);
         color: var(--ink);
       }
 
       .app-hero {
         padding: 20px 22px;
         border-radius: 16px;
-        background: linear-gradient(135deg, #f7efe2 0%, #efe3d3 45%, #f3efe7 100%);
+        background: linear-gradient(135deg, #121621 0%, #10131b 55%, #0e1017 100%);
         border: 1px solid var(--border);
-        box-shadow: 0 6px 18px rgba(25, 35, 28, 0.08);
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
         animation: riseIn 700ms ease both;
       }
       .app-hero h1 {
         margin: 0 0 6px 0;
-        font-size: 34px;
-        letter-spacing: 0.6px;
-        font-family: 'Playfair Display', serif;
-        color: var(--moss);
+        font-size: 32px;
+        letter-spacing: 0.4px;
+        font-family: 'Space Grotesk', sans-serif;
+        color: var(--ink);
       }
       .app-hero p {
         margin: 0;
         color: var(--muted);
-        font-family: 'Work Sans', sans-serif;
-        font-size: 15px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 14px;
       }
       .section-title {
         font-weight: 600;
         margin: 10px 0 6px 0;
-        font-family: 'Work Sans', sans-serif;
-        color: var(--moss);
+        font-family: 'Space Grotesk', sans-serif;
+        color: var(--ink);
       }
       .chip {
         display: inline-block;
         padding: 4px 10px;
         border-radius: 999px;
-        background: #f5ead8;
-        border: 1px solid #ead7b8;
+        background: var(--chip);
+        border: 1px solid var(--border);
         font-size: 12px;
-        color: #5a4b32;
+        color: var(--muted);
         margin-right: 6px;
-        font-family: 'Work Sans', sans-serif;
+        font-family: 'Space Mono', monospace;
         animation: chipIn 500ms ease both;
       }
       .chip:nth-child(1) { animation-delay: 40ms; }
@@ -72,15 +73,25 @@ st.markdown(
         border: 1px solid var(--border);
         border-radius: 12px;
         padding: 14px 16px;
-        background: #ffffff;
-        box-shadow: 0 3px 12px rgba(25, 35, 28, 0.06);
+        background: var(--panel);
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
         animation: fadeIn 500ms ease both;
       }
       .stTextArea textarea, .stTextInput input {
-        font-family: 'Work Sans', sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
+        background: var(--panel-2) !important;
+        color: var(--ink) !important;
+        border: 1px solid var(--border) !important;
       }
       .stButton > button {
         border-radius: 10px;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+        color: #0b0c0f;
+        border: none;
+        font-family: 'Space Grotesk', sans-serif;
+      }
+      .stButton > button:hover {
+        filter: brightness(1.05);
       }
 
       @keyframes riseIn {
